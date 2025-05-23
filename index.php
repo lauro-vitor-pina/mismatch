@@ -14,7 +14,7 @@ connection_service_close($dbc);
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>Mismatch - Where opposites attract!</title>
-    <link rel="stylesheet" type="text/css" href="assets/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
 </head>
 
 <body>
