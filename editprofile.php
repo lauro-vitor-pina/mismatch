@@ -1,20 +1,25 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <title>Mismatch - Edit Profile</title>
   <link rel="stylesheet" type="text/css" href="style.css" />
 </head>
+
 <body>
   <h3>Mismatch - Edit Profile</h3>
 
-<?php
+  <?php
   require_once(__DIR__ . '/src/appvars.php');
   require_once(__DIR__ . '/src/services/connection_service.php');
+  require_once(__DIR__ . '/src/services/mismatch_user_service.php');
+
 
   // Connect to the database
   $dbc = connection_service_get_dbc(); //mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
+
+  mismatch_user_Service_login($dbc);
 
   if (isset($_POST['submit'])) {
     // Grab the profile data from the POST
@@ -27,15 +32,16 @@
     $old_picture = mysqli_real_escape_string($dbc, trim($_POST['old_picture']));
     $new_picture = mysqli_real_escape_string($dbc, trim($_FILES['new_picture']['name']));
     $new_picture_type = $_FILES['new_picture']['type'];
-    $new_picture_size = $_FILES['new_picture']['size']; 
+    $new_picture_size = $_FILES['new_picture']['size'];
     list($new_picture_width, $new_picture_height) = getimagesize($_FILES['new_picture']['tmp_name']);
     $error = false;
 
     // Validate and move the uploaded picture file, if necessary
     if (!empty($new_picture)) {
       if ((($new_picture_type == 'image/gif') || ($new_picture_type == 'image/jpeg') || ($new_picture_type == 'image/pjpeg') ||
-        ($new_picture_type == 'image/png')) && ($new_picture_size > 0) && ($new_picture_size <= MM_MAXFILESIZE) &&
-        ($new_picture_width <= MM_MAXIMGWIDTH) && ($new_picture_height <= MM_MAXIMGHEIGHT)) {
+          ($new_picture_type == 'image/png')) && ($new_picture_size > 0) && ($new_picture_size <= MM_MAXFILESIZE) &&
+        ($new_picture_width <= MM_MAXIMGWIDTH) && ($new_picture_height <= MM_MAXIMGHEIGHT)
+      ) {
         if ($_FILES['file']['error'] == 0) {
           // Move the file to the target upload folder
           $target = MM_UPLOADPATH . basename($new_picture);
@@ -44,16 +50,14 @@
             if (!empty($old_picture) && ($old_picture != $new_picture)) {
               @unlink(MM_UPLOADPATH . $old_picture);
             }
-          }
-          else {
+          } else {
             // The new picture file move failed, so delete the temporary file and set the error flag
             @unlink($_FILES['new_picture']['tmp_name']);
             $error = true;
             echo '<p class="error">Sorry, there was a problem uploading your picture.</p>';
           }
         }
-      }
-      else {
+      } else {
         // The new picture file is not valid, so delete the temporary file and set the error flag
         @unlink($_FILES['new_picture']['tmp_name']);
         $error = true;
@@ -69,8 +73,7 @@
         if (!empty($new_picture)) {
           $query = "UPDATE mismatch_user SET first_name = '$first_name', last_name = '$last_name', gender = '$gender', " .
             " birthdate = '$birthdate', city = '$city', state = '$state', picture = '$new_picture' WHERE user_id = '$user_id'";
-        }
-        else {
+        } else {
           $query = "UPDATE mismatch_user SET first_name = '$first_name', last_name = '$last_name', gender = '$gender', " .
             " birthdate = '$birthdate', city = '$city', state = '$state' WHERE user_id = '$user_id'";
         }
@@ -81,8 +84,7 @@
 
         mysqli_close($dbc);
         exit();
-      }
-      else {
+      } else {
         echo '<p class="error">You must enter all of the profile data (the picture is optional).</p>';
       }
     }
@@ -101,14 +103,13 @@
       $city = $row['city'];
       $state = $row['state'];
       $old_picture = $row['picture'];
-    }
-    else {
+    } else {
       echo '<p class="error">There was a problem accessing your profile.</p>';
     }
   }
 
   mysqli_close($dbc);
-?>
+  ?>
 
   <form enctype="multipart/form-data" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
     <input type="hidden" name="MAX_FILE_SIZE" value="<?php echo MM_MAXFILESIZE; ?>" />
@@ -124,7 +125,8 @@
         <option value="F" <?php if (!empty($gender) && $gender == 'F') echo 'selected = "selected"'; ?>>Female</option>
       </select><br />
       <label for="birthdate">Birthdate:</label>
-      <input type="text" id="birthdate" name="birthdate" value="<?php if (!empty($birthdate)) echo $birthdate; else echo 'YYYY-MM-DD'; ?>" /><br />
+      <input type="text" id="birthdate" name="birthdate" value="<?php if (!empty($birthdate)) echo $birthdate;
+                                                                else echo 'YYYY-MM-DD'; ?>" /><br />
       <label for="city">City:</label>
       <input type="text" id="city" name="city" value="<?php if (!empty($city)) echo $city; ?>" /><br />
       <label for="state">State:</label>
@@ -138,5 +140,6 @@
     </fieldset>
     <input type="submit" value="Save Profile" name="submit" />
   </form>
-</body> 
+</body>
+
 </html>
