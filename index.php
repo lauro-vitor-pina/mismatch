@@ -19,9 +19,6 @@ connection_service_close($dbc);
 
 <body>
 
-
-    <?php echo '<h1>New Test for deploy</h1>'; ?>
-
     <h3>Mismatch - Where opposites attract! </h3>
 
     &#10084; <a href="viewprofile.php">View Profile</a><br />
