@@ -1,0 +1,7 @@
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home2/laurod56/mismatch.lauro-dev.online
+    - find $DEPLOYPATH ! -name "connectvars.*" -type f -exec rm -rf {} +
+    - /bin/cp -r * $DEPLOYPATH
+    
+
