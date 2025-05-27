@@ -1,7 +1,7 @@
 <?php
 require_once(__DIR__ . '/src/appvars.php');
 require_once(__DIR__ . '/src/services/connection_service.php');
-require_once(__DIR__ . '/src/services/mismatch_user_service.php');
+require_once(__DIR__ . '/src/services/mismatch_user/mismatch_user_sevice_get_all.php');
 
 $dbc = connection_service_get_dbc();
 $get_all_result =  mismatch_user_service_get_all($dbc, 5, null, 'join_date', 'DESC');
