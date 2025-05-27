@@ -24,7 +24,9 @@ function mismatch_user_service_login($dbc)
         header('HTTP/1.1 401 Unauthorized');
         header('WWW-Authenticate: Basic realm="Mismatch"');
         connection_service_close($dbc);
-        exit('<h3>Mismatch</h3> Sorry, you must enter a valid username and password to log in and access this page.');
+        $msg = '<h3>Mismatch</h3> Sorry, you must enter a valid username and password to log in and access this page.' . 
+            'If you are not a regitered member, please <a href="signup.php">sign up</a>';
+        exit($msg);
     }
 
     $row = mysqli_fetch_array($query_result);
