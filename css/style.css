@@ -3,6 +3,11 @@
   color: #FF0000;
 }
 
+.success{
+  font-weight: bold;
+  color: #00FF00;
+}
+
 .login {
   font-style: italic;
 }

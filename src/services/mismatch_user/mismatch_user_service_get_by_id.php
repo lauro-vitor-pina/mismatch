@@ -5,6 +5,7 @@ function mismatch_user_service_get_by_id($dbc, $user_id)
     $query = "SELECT 
                     `user_id`, 
                     `join_date`, 
+                    `username`,
                     `first_name`, 
                     `last_name`,
                     `gender`, 
@@ -18,8 +19,7 @@ function mismatch_user_service_get_by_id($dbc, $user_id)
 
     $query_result = mysqli_query($dbc, $query) or die('Error mismatch_user_service_get_by_id');
 
-    $mismatch_user = mysqli_fetch_array($query_result);
+    $result = mysqli_fetch_array($query_result);
 
-
-    return $mismatch_user;
+    return $result;
 }

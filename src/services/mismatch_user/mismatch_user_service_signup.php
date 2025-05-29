@@ -2,28 +2,22 @@
 
 function mismatch_user_service_signup($dbc, $username, $password1, $password2)
 {
-    $signup_result = [
-        'message' => ''
-    ];
-
     $validate_result = mismatch_user_service_validate_signup($dbc, $username, $password1, $password2);
 
     if ($validate_result != null) {
 
-        $signup_result['message'] = '<p class="error">' . $validate_result . '</p>';
-
-        return $signup_result;
+        return '<p class="error">' . $validate_result . '</p>';
     }
 
     $query = "INSERT INTO mismatch_user (`username`, `password`, `join_date`) VALUES ('$username', SHA('$password1'), NOW())";
 
     mysqli_query($dbc, $query) or die('Error in mismatch_user_service_signup');
 
-    $signup_result['message'] =
+    $result =
         '<p>Your new account has been successfully created. You\'re now ready to log in and ' .
         '<a href="editprofile.php">edit your profile</a> </p>';
 
-    return $signup_result;
+    return $result;
 }
 
 
