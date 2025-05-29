@@ -1,10 +1,11 @@
-<?php 
+<?php
 
+require_once(__DIR__ . '/login_service_start_session.php');
 require_once(__DIR__ . '../../../appvars.php');
+
 
 function login_service_do_login($dbc, $username, $password)
 {
-
     if (empty($username) || empty($password)) {
         return '<p class="error">The user name and password are mandatory field.</p>';
     }
@@ -22,11 +23,9 @@ function login_service_do_login($dbc, $username, $password)
         return '<p class="error"> Sorry, you must enter a valid username and password to log in.</p>';
     }
 
-    $expire = time() + (60 * 60 * 8);
-
-    setcookie(KEY_LOGIN_USER_ID, $user['user_id'], $expire);
-
-    setcookie(KEY_LOGIN_USER_NAME, $user['username'], $expire);
+    login_service_start_session();
+    $_SESSION[KEY_LOGIN_USER_ID] = $user['user_id'];
+    $_SESSION[KEY_LOGIN_USER_NAME] = $user['username'];
 
     header('Location: index.php');
 
