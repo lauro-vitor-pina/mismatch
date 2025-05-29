@@ -37,6 +37,8 @@ function mismatch_user_service_upload_picture(
         return '<p class="error"> The picture must be no greater than ' . (MM_MAXIMGWIDTH . 'x' . MM_MAXIMGHEIGHT) . ' pixels in size</p>';
     }
 
+    $new_picture_name = uniqid() . '_' . $new_picture_name;
+
     $path  = MM_UPLOADPATH . basename($new_picture_name);
 
     $upload_result = move_uploaded_file($new_picture_tmp_name, $path);
