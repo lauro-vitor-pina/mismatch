@@ -7,18 +7,18 @@ require_once(__DIR__ . '../../../appvars.php');
 
 function login_service_logout()
 {
-    if (login_service_user_is_logged()) {
 
-        login_service_start_session();
+    login_service_start_session();
 
-        $_SESSION = array();
+    $_SESSION = array();
+    
+    $exipres = time() - 3600;
 
-        if (isset($_COOKIE[session_name()])) {
-            setcookie(session_name(), '', time() - 3600);
-        }
+    setcookie(session_name(), '', $exipres);
+    setcookie(KEY_LOGIN_USER_ID, '', $exipres);
+    setcookie(KEY_LOGIN_USER_NAME, '', $exipres);
 
-        session_destroy();
-    }
+    session_destroy();
 
     header('Location: index.php');
 }

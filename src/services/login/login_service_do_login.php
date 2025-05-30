@@ -27,6 +27,10 @@ function login_service_do_login($dbc, $username, $password)
     $_SESSION[KEY_LOGIN_USER_ID] = $user['user_id'];
     $_SESSION[KEY_LOGIN_USER_NAME] = $user['username'];
 
+    $expires = time() + (60 * 60 * 24 * 30);
+    setcookie(KEY_LOGIN_USER_ID, $user['user_id'], $expires);
+    setcookie(KEY_LOGIN_USER_NAME, $user['username'], $expires);
+
     header('Location: index.php');
 
     return null;
