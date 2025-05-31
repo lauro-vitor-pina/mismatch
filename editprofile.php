@@ -13,7 +13,6 @@ $user_logged = login_service_get_user_logged();
 
 $dbc = connection_service_get_dbc();
 
-
 if (isset($_POST['submit'])) {
 
   $first_name = mysqli_real_escape_string($dbc, trim($_POST['first_name']));
@@ -78,110 +77,97 @@ if (isset($_POST['submit'])) {
 }
 
 connection_service_close($dbc);
-
 ?>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<?php
+$page_title = 'Edit Profile';
+require_once(__DIR__ . '/src/templates/header.php');
+require_once(__DIR__ . '/src/templates/navmenu.php');
+?>
 
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <title>Mismatch - Edit Profile</title>
-  <link rel="stylesheet" type="text/css" href="css/style.css" />
-</head>
+<form enctype="multipart/form-data" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 
-<body>
-  <h3>Mismatch - Edit Profile</h3>
+  <input type="hidden" name="old_picture" value="<?php echo $old_picture; ?>" />
 
-  <form enctype="multipart/form-data" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+  <fieldset>
 
-    <input type="hidden" name="old_picture" value="<?php echo $old_picture; ?>" />
+    <legend>Personal Information</legend>
 
-    <fieldset>
+    <div>
+      <label for="first_name">First name: <span class="error">*</span></label>
+      <input type="text" id="first_name" name="first_name" value="<?php echo $first_name; ?>" />
+    </div>
+    <br />
 
-      <legend>Personal Information</legend>
+    <div>
+      <label for="last_name">Last name: <span class="error">*</span></label>
+      <input type="text" id="last_name" name="last_name" value="<?php echo $last_name; ?>" />
+    </div>
+    <br />
+
+    <div>
+      <label for="gender">Gender: <span class="error">*</span></label>
+      <select id="gender" name="gender">
+        <option value="M" <?php if ($gender == 'M') echo 'selected = "selected"'; ?>>Male</option>
+        <option value="F" <?php if ($gender == 'F') echo 'selected = "selected"'; ?>>Female</option>
+      </select>
+    </div>
+    <br />
+
+    <div>
+      <label for="birthdate">Birthdate: <span class="error">*</span></label>
+      <input type="date" id="birthdate" name="birthdate" value="<?php echo $birthdate; ?>" />
+    </div>
+    <br />
+
+    <div>
+      <label for="city">City: <span class="error">*</span></label>
+      <input type="text" id="city" name="city" value="<?php echo $city; ?>" />
+    </div>
+    <br />
+
+    <div>
+      <label for="state">State: <span class="error">*</span></label>
+      <input type="text" id="state" name="state" minlength="0" maxlength="2" value="<?php echo $state; ?>" />
+    </div>
+    <br />
+
+
+    <div style="display:flex">
+      <div>
+        <label for="new_picture">Picture:</label>
+        <input type="file" id="new_picture" name="new_picture" />
+      </div>
 
       <div>
-        <label for="first_name">First name: <span class="error">*</span></label>
-        <input type="text" id="first_name" name="first_name" value="<?php echo $first_name; ?>" />
-      </div>
-      <br />
 
-      <div>
-        <label for="last_name">Last name: <span class="error">*</span></label>
-        <input type="text" id="last_name" name="last_name" value="<?php echo $last_name; ?>" />
-      </div>
-      <br />
-
-      <div>
-        <label for="gender">Gender: <span class="error">*</span></label>
-        <select id="gender" name="gender">
-          <option value="M" <?php if ($gender == 'M') echo 'selected = "selected"'; ?>>Male</option>
-          <option value="F" <?php if ($gender == 'F') echo 'selected = "selected"'; ?>>Female</option>
-        </select>
-      </div>
-      <br />
-
-      <div>
-        <label for="birthdate">Birthdate: <span class="error">*</span></label>
-        <input type="date" id="birthdate" name="birthdate" value="<?php echo $birthdate; ?>" />
-      </div>
-      <br />
-
-      <div>
-        <label for="city">City: <span class="error">*</span></label>
-        <input type="text" id="city" name="city" value="<?php echo $city; ?>" />
-      </div>
-      <br />
-
-      <div>
-        <label for="state">State: <span class="error">*</span></label>
-        <input type="text" id="state" name="state" minlength="0" maxlength="2" value="<?php echo $state; ?>" />
-      </div>
-      <br />
-
-
-      <div style="display:flex">
-        <div>
-          <label for="new_picture">Picture:</label>
-          <input type="file" id="new_picture" name="new_picture" />
-        </div>
-
-        <div>
-
-          <?php if (!empty($old_picture)) { ?>
-            <img class="profile" src="<?php echo MM_UPLOADPATH . $old_picture; ?>" alt="Profile Picture" width="100" height="auto" />
-          <?php  } ?>
-
-        </div>
+        <?php if (!empty($old_picture)) { ?>
+          <img class="profile" src="<?php echo MM_UPLOADPATH . $old_picture; ?>" alt="Profile Picture" width="100" height="auto" />
+        <?php  } ?>
 
       </div>
 
-    </fieldset>
-    <br>
-    <a href="index.php">
-      << Back</a>
-        <input type="submit" value="Save Profile" name="submit" />
-  </form>
+    </div>
 
-  <div>
+  </fieldset>
+  <br>
+  <input type="submit" value="Save Profile" name="submit" />
+  <br>
 
-    <?php
+  <?php
 
-    if (isset($result_update)) echo $result_update;
+  if (isset($result_update)) echo $result_update;
 
-    if (isset($result_upload_picture)) echo $result_upload_picture;
+  if (isset($result_upload_picture)) echo $result_upload_picture;
 
-    if (isset($result_validate_update) && $result_validate_update != null) {
+  if (isset($result_validate_update) && $result_validate_update != null) {
 
-      foreach ($result_validate_update as $item)
-        echo $item;
-    }
+    foreach ($result_validate_update as $item)
+      echo $item;
+  }
 
-    ?>
+  ?>
 
-  </div>
+</form>
 
-</body>
-
-</html>
+<?php require_once(__DIR__ . '/src/templates/footer.php'); ?>

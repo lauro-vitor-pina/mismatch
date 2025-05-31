@@ -7,7 +7,6 @@ require_once(__DIR__ . '../../../appvars.php');
 
 function login_service_logout()
 {
-
     login_service_start_session();
 
     $_SESSION = array();

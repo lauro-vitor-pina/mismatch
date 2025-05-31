@@ -26,50 +26,45 @@ if (isset($_POST['submit'])) {
     connection_service_close($dbc);
 }
 
-
 ?>
-<html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mismatch - Sign Up</title>
-    <link rel="stylesheet" href="css/style.css">
-</head>
+<?php
+$page_title = 'Sign Up';
+require_once(__DIR__ . '/src/templates/header.php');
+require_once(__DIR__ . '/src/templates/navmenu.php');
+?>
 
-<body>
-    <?php if ($user_logged['is_logged'] == false) { ?>
-        <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
-            <fieldset>
-                <legend>Registration Info</legend>
-                <br>
-
-                <div>
-                    <label for="username">Username:</label>
-                    <input type="text" name="username" id="username" value="<?php echo $username; ?>">
-                    <br> <br>
-                </div>
-                <div>
-                    <label for="password1">Password:</label>
-                    <input type="password" name="password1" id="password1" value="<?php echo $password1; ?>">
-                    <br> <br>
-                </div>
-                <div>
-                    <label for="password2">Password (retype):</label>
-                    <input type="password" name="password2" id="password2" value="<?php echo $password2; ?>">
-                    <br> <br>
-                </div>
-            </fieldset>
+<?php if ($user_logged['is_logged'] == false) { ?>
+    <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
+        <fieldset>
+            <legend>Registration Info</legend>
             <br>
-            <input type="submit" name="submit" value="Sign Up">
-        </form>
 
-        <?php if ($signup_result != null) echo $signup_result['message']; ?>
+            <div>
+                <label for="username">Username:</label>
+                <input type="text" name="username" id="username" value="<?php echo $username; ?>">
+                <br> <br>
+            </div>
+            <div>
+                <label for="password1">Password:</label>
+                <input type="password" name="password1" id="password1" value="<?php echo $password1; ?>">
+                <br> <br>
+            </div>
+            <div>
+                <label for="password2">Password (retype):</label>
+                <input type="password" name="password2" id="password2" value="<?php echo $password2; ?>">
+                <br> <br>
+            </div>
+        </fieldset>
+        <br>
+        <input type="submit" name="submit" value="Sign Up">
+    </form>
 
-    <?php } else {
-        echo '<p class="login"> You are logged in as ' . $user_logged['username'] . '. <p>';
-    } ?>
+    <?php if ($signup_result != null) echo $signup_result['message']; ?>
 
-</body>
+<?php } else {
+    echo '<p class="login"> You are logged in as ' . $user_logged['username'] . '. <p>';
+} ?>
 
-</html>
+
+<?php require_once(__DIR__ . '/src/templates/footer.php'); ?>

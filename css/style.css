@@ -25,3 +25,8 @@ td.label {
 img.profile {
   vertical-align: top;
 }
+
+.footer {
+  text-align: center;
+  font-size: 80%;
+}

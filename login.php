@@ -24,45 +24,40 @@ if (isset($_POST['submit'])) {
 }
 
 ?>
-<html lang="en">
-
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Mismatch - Login</title>
-    <link rel="stylesheet" type="text/css" href="css/style.css" />
-</head>
-
-<body>
-    <h2>Log In</h2>
-
-    <?php if ($user_logged['is_logged'] == false) { ?>
-
-        <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-            <fieldset>
-                <legend>Log In</legend>
-                <div>
-                    <label for="username">Username:</label>
-                    <input type="text" name="username" value="<?php echo $username; ?>">
-                    <br><br>
-                </div>
-                <div>
-                    <label for="password">Password:</label>
-                    <input type="password" name="password" value="<?php echo $password; ?>">
-                </div>
-            </fieldset>
-
-            <br>
-
-            <input type="submit" name="submit" value="Login">
-        </form>
-
-    <?php } else {
-        echo '<p class="login"> You are logged in as ' . $user_logged['username'] . '. <p>';
-    } ?>
+<?php
+$page_title = 'Login';
+require_once(__DIR__ . '/src/templates/header.php');
+require_once(__DIR__ . '/src/templates/navmenu.php');
+?>
 
 
-    <?php echo $message; ?>
 
-</body>
+<?php if ($user_logged['is_logged'] == false) { ?>
 
-</html>
+    <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+        <fieldset>
+            <legend>Log In</legend>
+            <div>
+                <label for="username">Username:</label>
+                <input type="text" name="username" value="<?php echo $username; ?>">
+                <br><br>
+            </div>
+            <div>
+                <label for="password">Password:</label>
+                <input type="password" name="password" value="<?php echo $password; ?>">
+            </div>
+        </fieldset>
+
+        <br>
+
+        <input type="submit" name="submit" value="Login">
+    </form>
+
+<?php } else {
+    echo '<p class="login"> You are logged in as ' . $user_logged['username'] . '. <p>';
+}
+
+echo $message;
+?>
+
+<?php require_once(__DIR__ . '/src/templates/footer.php'); ?>
