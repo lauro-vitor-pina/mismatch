@@ -1,8 +1,9 @@
 <?php
 
 require_once(__DIR__ . '/src/services/connection_service.php');
-require_once(__DIR__ . '/src/services/mismatch_user/mismatch_user_service_signup.php');
-require_once(__DIR__ . '/src/services/login/login_service_get_user_logged.php');
+require_once(__DIR__ . '/src/services/login_service.php');
+require_once(__DIR__ . '/src/services/mismatch_user_service.php');
+
 
 $user_logged = login_service_get_user_logged();
 
@@ -60,7 +61,7 @@ require_once(__DIR__ . '/src/templates/navmenu.php');
         <input type="submit" name="submit" value="Sign Up">
     </form>
 
-    <?php if ($signup_result != null) echo $signup_result['message']; ?>
+    <?php if (!empty($signup_result)) echo $signup_result; ?>
 
 <?php } else {
     echo '<p class="login"> You are logged in as ' . $user_logged['username'] . '. <p>';

@@ -1,8 +1,8 @@
 <?php
 require_once(__DIR__ . '/src/appvars.php');
 require_once(__DIR__ . '/src/services/connection_service.php');
-require_once(__DIR__ . '/src/services/mismatch_user/mismatch_user_sevice_get_all.php');
-require_once(__DIR__ . '/src/services/login/login_service_get_user_logged.php');
+require_once(__DIR__ . '/src/services/mismatch_user_service.php');
+require_once(__DIR__ . '/src/services/login_service.php');
 
 $dbc = connection_service_get_dbc();
 

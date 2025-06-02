@@ -1,8 +1,8 @@
 <?php
 
 require_once(__DIR__ . '/src/services/connection_service.php');
-require_once(__DIR__ . '/src/services/login/login_service_get_user_logged.php');
-require_once(__DIR__ . '/src/services/login/login_service_do_login.php');
+require_once(__DIR__ . '/src/services/login_service.php');
+
 
 $user_logged = login_service_get_user_logged();
 $username = '';

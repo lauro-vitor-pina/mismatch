@@ -1,11 +1,7 @@
 <?php
 require_once(__DIR__ . '/src/services/connection_service.php');
-require_once(__DIR__  . '/src/services/login/login_service_authenticate.php');
-require_once(__DIR__ . '/src/services/login/login_service_get_user_logged.php');
-require_once(__DIR__ . '/src/services/mismatch_user/mismatch_user_service_get_by_id.php');
-require_once(__DIR__ . '/src/services/mismatch_user/mismatch_user_service_update.php');
-require_once(__DIR__ . '/src/services/mismatch_user/mismatch_user_service_upload_picture.php');
-require_once(__DIR__ . '/src/services/mismatch_user/mismatch_user_service_validate_update.php');
+require_once(__DIR__. '/src/services/login_service.php');
+require_once(__DIR__ . '/src/services/mismatch_user_service.php');
 
 login_service_authenticate();
 

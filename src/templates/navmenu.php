@@ -1,5 +1,6 @@
 <?php
-require_once(__DIR__ . '../../services/login/login_service_get_user_logged.php');
+require_once(__DIR__ . '../../services/login_service.php');
+
 $user_logged = login_service_get_user_logged();
 ?>
 

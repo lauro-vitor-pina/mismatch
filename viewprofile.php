@@ -2,8 +2,8 @@
 
 require_once(__DIR__ . '/src/appvars.php');
 require_once(__DIR__ . '/src/services/connection_service.php');
-require_once(__DIR__ . '/src/services/login/login_service_authenticate.php');
-require_once(__DIR__ . '/src/services/mismatch_user/mismatch_user_service_get_by_id.php');
+require_once(__DIR__ . '/src/services/login_service.php');
+require_once(__DIR__ . '/src/services/mismatch_user_service.php');
 
 login_service_authenticate();
 
@@ -38,7 +38,7 @@ require_once(__DIR__ . '/src/templates/navmenu.php');
     </tr>
     <tr>
       <td class="label">Gender:</td>
-      <td><?php echo $user['gender'] ?></td>
+      <td><?php echo mismatch_user_service_get_gender_description($user['gender']); ?></td>
     </tr>
 
     <tr>
