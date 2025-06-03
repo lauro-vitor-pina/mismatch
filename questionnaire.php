@@ -1,13 +1,25 @@
 <?php
-
+require_once(__DIR__ . '/src/services/connection_service.php');
+require_once(__DIR__ . '/src/services/login_service.php');
 require_once(__DIR__ . '/src/services/mismatch_response_service.php');
 
+login_service_authenticate();
+
+$dbc = connection_service_get_dbc();
+
+$user = login_service_get_user_logged();
+
+$result = mismatch_response_service_handler_questionnaire($dbc, $user['id'], $_POST);
+
+connection_service_close($dbc);
+
+?>
+
+
+<?php
 $page_title =  'Questionnaire';
 require_once(__DIR__ . '/src/templates/header.php');
 require_once(__DIR__ . '/src/templates/navmenu.php');
-
-$responses = mismatch_response_service_handler_questionnaire();
-
 ?>
 
 
@@ -17,11 +29,11 @@ $responses = mismatch_response_service_handler_questionnaire();
 
     <?php
 
-    $category = $responses[0]['category'];
+    $category = $result[0]['category'];
 
     echo '<fieldset> <legend>' . $category . '</legend>';
 
-    foreach ($responses as $response_item) {
+    foreach ($result as $response_item) {
 
         $response_id = $response_item['response_id'];
         $current_category = $response_item['category'];
