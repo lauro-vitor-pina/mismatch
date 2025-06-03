@@ -52,7 +52,7 @@ function mismatch_user_service_get_by_id($dbc, $user_id)
                     `first_name`, 
                     `last_name`,
                     `gender`, 
-                    `birthdate`, 
+                     DATE_FORMAT(`birthdate`, '%d/%m/%Y') AS `birthdate`, 
                     `city`, 
                     `state`, 
                     `picture` 
