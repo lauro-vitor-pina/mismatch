@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 require_once(__DIR__ . '../../appvars.php');
 
@@ -30,7 +30,7 @@ function login_service_do_login($dbc, $username, $password)
         return '<p class="error"> Sorry, you must enter a valid username and password to log in.</p>';
     }
 
-    login_service_start_session();
+
     $_SESSION[KEY_LOGIN_USER_ID] = $user['user_id'];
     $_SESSION[KEY_LOGIN_USER_NAME] = $user['username'];
 
@@ -53,7 +53,6 @@ function login_service_get_user_logged()
 
     if (login_service_user_is_logged()) {
 
-        login_service_start_session();
         $user_logged['id'] = $_SESSION[KEY_LOGIN_USER_ID];
         $user_logged['username'] = $_SESSION[KEY_LOGIN_USER_NAME];
         $user_logged['is_logged'] = true;
@@ -64,10 +63,9 @@ function login_service_get_user_logged()
 
 function login_service_logout()
 {
-    login_service_start_session();
 
     $_SESSION = array();
-    
+
     $exipres = time() - 3600;
 
     setcookie(session_name(), '', $exipres);
@@ -79,24 +77,7 @@ function login_service_logout()
     header('Location: index.php');
 }
 
-function login_service_start_session()
-{
-    if (session_status() === PHP_SESSION_NONE) {
-        session_start();
-    }
-
-    if (!isset($_SESSION[KEY_LOGIN_USER_ID]) && isset($_COOKIE[KEY_LOGIN_USER_ID])) {
-        $_SESSION[KEY_LOGIN_USER_ID] = $_COOKIE[KEY_LOGIN_USER_ID];
-    }
-
-    if (!isset($_SESSION[KEY_LOGIN_USER_NAME]) && isset($_COOKIE[KEY_LOGIN_USER_NAME])) {
-        $_SESSION[KEY_LOGIN_USER_NAME] = $_COOKIE[KEY_LOGIN_USER_NAME];
-    }
-}
-
 function login_service_user_is_logged()
 {
-    login_service_start_session();
-
     return  isset($_SESSION[KEY_LOGIN_USER_ID]) && isset($_SESSION[KEY_LOGIN_USER_NAME]);
 }
