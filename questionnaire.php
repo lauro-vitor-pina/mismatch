@@ -1,5 +1,5 @@
 <?php
-require_once(__DIR__.'/src/templates/startsession.php');
+require_once(__DIR__ . '/src/templates/startsession.php');
 require_once(__DIR__ . '/src/services/connection_service.php');
 require_once(__DIR__ . '/src/services/login_service.php');
 require_once(__DIR__ . '/src/services/mismatch_response_service.php');
@@ -20,55 +20,59 @@ connection_service_close($dbc);
 <?php
 $page_title =  'Questionnaire';
 require_once(__DIR__ . '/src/templates/header.php');
-require_once(__DIR__ . '/src/templates/navmenu.php');
-?>
+require_once(__DIR__ . '/src/templates/navmenu.php'); ?>
+
+<?php if (sizeof($result) > 0) { ?>
+
+    <p> How do you feel about each topic ? </p>
+
+    <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+
+        <?php
 
 
-<p> How do you feel about each topic ? </p>
 
-<form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+        $category = $result[0]['category'];
 
-    <?php
+        echo '<fieldset> <legend>' . $category . '</legend>';
 
-    $category = $result[0]['category'];
+        foreach ($result as $response_item) {
 
-    echo '<fieldset> <legend>' . $category . '</legend>';
+            $response_id = $response_item['response_id'];
+            $current_category = $response_item['category'];
+            $topic_name = $response_item['topic'];
+            $response_value = $response_item['response'];
 
-    foreach ($result as $response_item) {
+            if ($category != $current_category) {
 
-        $response_id = $response_item['response_id'];
-        $current_category = $response_item['category'];
-        $topic_name = $response_item['name'];
-        $response_value = $response_item['response'];
+                $category = $current_category;
 
-        if ($category != $current_category) {
+                echo '</fieldset>';
 
-            $category = $current_category;
+                echo '<fieldset> <legend>' . $category . '</legend>';
+            }
 
-            echo '</fieldset>';
+            echo "<label for='$response_id'> $topic_name </label>";
 
-            echo '<fieldset> <legend>' . $category . '</legend>';
+            $love_checked = ($response_value == 'Love' ? 'checked="checked"' : '');
+            echo "<input type='radio' name='$response_id' value='Love' $love_checked> Love";
+
+            $hate_checked = ($response_value == 'Hate' ? 'checked="checked"' : '');
+            echo "<input type='radio' name='$response_id' value='Hate' $hate_checked> Hate";
+
+            echo '<br />';
         }
 
-        echo "<label for='$response_id'> $topic_name </label>";
+        echo '</fieldset>';
 
-        $love_checked = ($response_value == 'Love' ? 'checked="checked"' : '');
-        echo "<input type='radio' name='$response_id' value='Love' $love_checked> Love";
+        ?>
 
-        $hate_checked = ($response_value == 'Hate' ? 'checked="checked"' : '');
-        echo "<input type='radio' name='$response_id' value='Hate' $hate_checked> Hate";
+        <br />
 
-        echo '<br />';
-    }
+        <input type="submit" value="Save Questionnaire" name="submit" />
 
-    echo '</fieldset>';
+    </form>
 
-    ?>
-
-    <br />
-
-    <input type="submit" value="Save Questionnaire" name="submit" />
-
-</form>
+<?php } ?>
 
 <?php require_once(__DIR__ . '/src/templates/footer.php'); ?>

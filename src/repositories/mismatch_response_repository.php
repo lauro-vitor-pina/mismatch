@@ -7,12 +7,13 @@ function mismatch_response_repository_get_all($dbc, $user_id)
                 r.response_id,
                 r.topic_id,
                 r.response,
-                t.name,
-                t.category
+                t.name AS topic,
+                c.name AS category
               FROM `mismatch_response` r
               INNER JOIN `mismatch_topic` t ON t.topic_id = r.topic_id
+              INNER JOIN `mismatch_category` c ON  c.category_id =  t.category_id
               WHERE r.user_id = $user_id
-              ORDER BY t.category ASC, t.name ASC;";
+              ORDER BY c.name ASC, t.name ASC;";
 
     $query_result = mysqli_query($dbc, $query);
 
