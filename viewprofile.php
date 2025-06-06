@@ -4,6 +4,7 @@ require_once(__DIR__ . '/src/appvars.php');
 require_once(__DIR__ . '/src/services/connection_service.php');
 require_once(__DIR__ . '/src/services/login_service.php');
 require_once(__DIR__ . '/src/services/mismatch_user_service.php');
+require_once(__DIR__ . '/src/repositories/mismatch_user_repository.php');
 
 login_service_authenticate();
 
@@ -13,7 +14,7 @@ $user_id = isset($_GET['user_id']) ? $_GET['user_id'] : null;
 
 if (is_numeric($user_id)) {
   $dbc = connection_service_get_dbc();
-  $user = mismatch_user_service_get_by_id($dbc, $user_id);
+  $user = mismatch_user_repository_get_by_id($dbc, $user_id);
   connection_service_close($dbc);
 }
 

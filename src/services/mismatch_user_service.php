@@ -1,72 +1,5 @@
 <?php
 
-function mismatch_user_service_get_all($dbc, $limit, $offset, $sort_prop, $sort_dir)
-{
-    $query = "SELECT 
-                    `user_id`, 
-                    `join_date`, 
-                    `first_name`, 
-                    `last_name`,
-                    `gender`, 
-                    `birthdate`, 
-                    `city`, 
-                    `state`, 
-                    `picture` 
-              FROM `mismatch_user` 
-              WHERE 1 = 1";
-
-    if ($sort_prop != null && $sort_dir != null) {
-
-        $query .= " ORDER BY `$sort_prop` $sort_dir ";
-    }
-
-
-    if ($limit != null) {
-
-        $query .= " LIMIT $limit ";
-
-        if ($offset != null) {
-            $query .= " OFFSET $offset ";
-        }
-    }
-
-
-    $query_result = mysqli_query($dbc, $query) or die('Error mismatch_user_service_get_all');
-
-    $get_all_result = [];
-
-    while ($row = mysqli_fetch_array($query_result)) {
-        $get_all_result[] = $row;
-    }
-
-    return $get_all_result;
-}
-
-
-function mismatch_user_service_get_by_id($dbc, $user_id)
-{
-    $query = "SELECT 
-                    `user_id`, 
-                    `join_date`, 
-                    `username`,
-                    `first_name`, 
-                    `last_name`,
-                    `gender`, 
-                    `birthdate`, 
-                    `city`, 
-                    `state`, 
-                    `picture` 
-              FROM `mismatch_user` 
-              WHERE `user_id` = $user_id
-              LIMIT 1";
-
-    $query_result = mysqli_query($dbc, $query) or die('Error mismatch_user_service_get_by_id');
-
-    $result = mysqli_fetch_array($query_result);
-
-    return $result;
-}
-
 function mismatch_user_service_get_gender_description($gender)
 {
     switch ($gender) {
@@ -80,7 +13,6 @@ function mismatch_user_service_get_gender_description($gender)
     }
 }
 
-
 function mismatch_user_service_signup($dbc, $username, $password1, $password2)
 {
     $validate_result = mismatch_user_service_validate_signup($dbc, $username, $password1, $password2);
@@ -90,10 +22,8 @@ function mismatch_user_service_signup($dbc, $username, $password1, $password2)
         return '<p class="error">' . $validate_result . '</p>';
     }
 
-    $query = "INSERT INTO mismatch_user (`username`, `password`, `join_date`) VALUES ('$username', SHA('$password1'), NOW())";
-
-    mysqli_query($dbc, $query) or die('Error in mismatch_user_service_signup');
-
+    mismatch_user_repository_insert($dbc, $username, $password1);
+    
     $result =
         '<p>Your new account has been successfully created. You\'re now ready to log in and ' .
         '<a href="editprofile.php">edit your profile</a> </p>';
@@ -129,25 +59,6 @@ function mismatch_user_service_validate_signup($dbc, $username, $password1, $pas
     }
 
     return null;
-}
-
-
-function mismatch_user_service_update($dbc, $user_id, $first_name, $last_name, $gender, $birthdate, $city, $state)
-{
-    $query = "UPDATE `mismatch_user` 
-              SET
-                `first_name`='$first_name',
-                `last_name`='$last_name',
-                `gender`='$gender',
-                `birthdate`='$birthdate',
-                `city`='$city',
-                `state`='$state'
-                WHERE  `user_id`= $user_id
-                LIMIT 1";
-
-    mysqli_query($dbc, $query) or die('Error mismatch_user_service_update');
-
-    return '<p class="success">The user has been updated with successfuly</p>';
 }
 
 function mismatch_user_service_upload_picture(
@@ -201,9 +112,7 @@ function mismatch_user_service_upload_picture(
         @unlink(MM_UPLOADPATH . $old_picture_name);
     }
 
-    $query = "UPDATE mismatch_user SET picture = '$new_picture_name' WHERE user_id = $user_id LIMIT 1";
-
-    mysqli_query($dbc, $query) or die('error in mismatch_user_service_upload_picture');
+    mismatch_user_repository_update_picture($dbc, $user_id, $new_picture_name);
 
     $old_picture_name = $new_picture_name;
 

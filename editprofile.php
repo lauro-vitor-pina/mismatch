@@ -2,6 +2,7 @@
 require_once(__DIR__.'/src/templates/startsession.php');
 require_once(__DIR__ . '/src/services/connection_service.php');
 require_once(__DIR__. '/src/services/login_service.php');
+require_once(__DIR__ . '/src/repositories/mismatch_user_repository.php');
 require_once(__DIR__ . '/src/services/mismatch_user_service.php');
 
 login_service_authenticate();
@@ -39,7 +40,7 @@ if (isset($_POST['submit'])) {
 
   if ($result_validate_update == null) {
 
-    $result_update = mismatch_user_service_update(
+    $result_update = mismatch_user_repository_update(
       $dbc,
       $user_logged['id'],
       $first_name,
@@ -62,7 +63,7 @@ if (isset($_POST['submit'])) {
   }
 } else {
 
-  $result_get_by_id = mismatch_user_service_get_by_id($dbc, $user_logged['id']);
+  $result_get_by_id = mismatch_user_repository_get_by_id($dbc, $user_logged['id']);
 
   $first_name = $result_get_by_id['first_name'];
   $last_name = $result_get_by_id['last_name'];
@@ -153,7 +154,7 @@ require_once(__DIR__ . '/src/templates/navmenu.php');
 
   <?php
 
-  if (isset($result_update)) echo $result_update;
+  if (isset($result_update)) echo '<p class="success">The user has been updated with successfuly</p>';
 
   if (isset($result_upload_picture)) echo $result_upload_picture;
 
