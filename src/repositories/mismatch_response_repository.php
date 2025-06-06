@@ -1,7 +1,7 @@
 <?php
 
 
-function mismatch_response_repository_get_all($dbc, $user_id)
+function mismatch_response_repository_get_all_by_user_id($dbc, $user_id)
 {
     $query = "SELECT 
                 r.response_id,

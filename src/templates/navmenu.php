@@ -16,6 +16,8 @@ $user_logged = login_service_get_user_logged();
 
     <a href="questionnaire.php">Questionnaire</a> &#10084;
 
+    <a href="mymismatch.php">My Mismatch</a>&#10084;
+
     <a href="logout.php">Log Out (<?php echo $user_logged['username']; ?>)</a>
 
 <?php } else { ?>
