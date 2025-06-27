@@ -22,6 +22,8 @@ function mismatch_response_service_handler_questionnaire($dbc, $user_id, $respon
                 mismatch_response_repository_update($dbc, $user_id, $response_id, $response_value);
             }
         }
+
+        echo '<h4 class="success">Your questionnaire has been updated.</h4>';
     }
 
     $result = mismatch_response_repository_get_all_by_user_id($dbc, $user_id);

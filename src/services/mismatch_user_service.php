@@ -1,5 +1,7 @@
 <?php
 
+require_once(__DIR__ . '../../repositories/mismatch_user_repository.php');
+
 function mismatch_user_service_get_gender_description($gender)
 {
     switch ($gender) {

@@ -1,16 +1,3 @@
-CREATE TABLE `mismatch_user` (
-  `user_id` INT AUTO_INCREMENT,
-  `join_date` DATETIME,
-  `first_name` VARCHAR(32),
-  `last_name` VARCHAR(32),
-  `gender` VARCHAR(1),
-  `birthdate` DATE,
-  `city` VARCHAR(32),
-  `state` VARCHAR(2),
-  `picture` VARCHAR(32),
-  PRIMARY KEY (`user_id`)
-);
-
 INSERT INTO `mismatch_user` VALUES (1, '2008-06-03 14:51:46', 'Sidney', 'Kelsow', 'F', '1984-07-19', 'Tempe', 'AZ', 'sidneypic.jpg');
 INSERT INTO `mismatch_user` VALUES (2, '2008-06-03 14:52:09', 'Nevil', 'Johansson', 'M', '1973-05-13', 'Reno', 'NV', 'nevilpic.jpg');
 INSERT INTO `mismatch_user` VALUES (3, '2008-06-03 14:53:05', 'Alex', 'Cooper', 'M', '1974-09-13', 'Boise', 'ID', 'alexpic.jpg');

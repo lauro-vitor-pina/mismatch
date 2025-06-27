@@ -16,14 +16,3 @@ ADD CONSTRAINT fk_mismatch_topic_x_mismatch_category
 FOREIGN KEY(category_id) REFERENCES mismatch_category(category_id)
 ON DELETE RESTRICT
 ON UPDATE RESTRICT;
-
-START TRANSACTION;
-
-INSERT INTO mismatch_category (name) VALUES ('Appearence');
-INSERT INTO mismatch_category (name) VALUES ('Entertainment');
-INSERT INTO mismatch_category (name) VALUES ('Food');
-INSERT INTO mismatch_category (name) VALUES ('People');
-INSERT INTO mismatch_category (name) VALUES ('Activities');
-
-COMMIT;
-

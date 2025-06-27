@@ -1,0 +1,28 @@
+START TRANSACTION;
+INSERT INTO `mismatch_topic`(topic_id, name, category_id) VALUES (1, 'Tattoos', 1);
+INSERT INTO `mismatch_topic`(topic_id, name, category_id) VALUES (2, 'Gold chains', 1);
+INSERT INTO `mismatch_topic`(topic_id, name, category_id) VALUES (3, 'Body piercings', 1);
+INSERT INTO `mismatch_topic`(topic_id, name, category_id) VALUES (4, 'Cowboy boots', 1);
+INSERT INTO `mismatch_topic`(topic_id, name, category_id) VALUES (5, 'Long hair', 1);
+INSERT INTO `mismatch_topic`(topic_id, name, category_id) VALUES (6, 'Reality TV', 2);
+INSERT INTO `mismatch_topic`(topic_id, name, category_id) VALUES (7, 'Professional wrestling', 2);
+INSERT INTO `mismatch_topic`(topic_id, name, category_id) VALUES (8, 'Horror movies', 2);
+INSERT INTO `mismatch_topic`(topic_id, name, category_id) VALUES (9, 'Easy listening music', 2);
+INSERT INTO `mismatch_topic`(topic_id, name, category_id) VALUES (10, 'The opera', 2);
+INSERT INTO `mismatch_topic`(topic_id, name, category_id) VALUES (11, 'Sushi', 3);
+INSERT INTO `mismatch_topic`(topic_id, name, category_id) VALUES (12, 'Spam', 3);
+INSERT INTO `mismatch_topic`(topic_id, name, category_id) VALUES (13, 'Spicy food', 3);
+INSERT INTO `mismatch_topic`(topic_id, name, category_id) VALUES (14, 'Peanut butter & banana sandwiches', 3);
+INSERT INTO `mismatch_topic`(topic_id, name, category_id) VALUES (15, 'Martinis', 3);
+INSERT INTO `mismatch_topic`(topic_id, name, category_id) VALUES (16, 'Howard Stern', 4);
+INSERT INTO `mismatch_topic`(topic_id, name, category_id) VALUES (17, 'Bill Gates', 4);
+INSERT INTO `mismatch_topic`(topic_id, name, category_id) VALUES (18, 'Barbara Streisand', 4);
+INSERT INTO `mismatch_topic`(topic_id, name, category_id) VALUES (19, 'Hugh Hefner', 4);
+INSERT INTO `mismatch_topic`(topic_id, name, category_id) VALUES (20, 'Martha Stewart', 4);
+INSERT INTO `mismatch_topic`(topic_id, name, category_id) VALUES (21, 'Yoga', 5);
+INSERT INTO `mismatch_topic`(topic_id, name, category_id) VALUES (22, 'Weightlifting', 5);
+INSERT INTO `mismatch_topic`(topic_id, name, category_id) VALUES (23, 'Cube puzzles', 5);
+INSERT INTO `mismatch_topic`(topic_id, name, category_id) VALUES (24, 'Karaoke', 5);
+INSERT INTO `mismatch_topic`(topic_id, name, category_id) VALUES (25, 'Hiking', 5);
+
+COMMIT;
