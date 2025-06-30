@@ -49,6 +49,7 @@ function mismatch_response_service_get_my_mismatch($dbc, $user_id)
     $mismatch_score = 0; //armazena o placar de desencontrabilidade entre dois usuários - o maior placar será o melhor par imperfeito
     $mismatch_user_id = -1; //armazena o id do usuário que está sendo verificado como um pontencial par
     $mismatch_topics = null; //array que armazena os tópicos que tem respostas opostas entre dois usuários
+    $mismatch_categories = array(); // array que armazena as categorias que foram opostas entre os dois usuários
 
     foreach ($others_users_ids as $other_user_id) {
 
@@ -56,6 +57,7 @@ function mismatch_response_service_get_my_mismatch($dbc, $user_id)
 
         $score = 0;
         $topics = array();
+        $categories = array(); //array que recebe as categorias de respostas opostas entre dois usuários
 
         for ($i = 0; $i < sizeof($responses_other_user); $i++) {
 
@@ -70,6 +72,7 @@ function mismatch_response_service_get_my_mismatch($dbc, $user_id)
             ) {
                 $score++;
                 array_push($topics, $responses_user[$i]['topic']);
+                array_push($categories, $responses_user[$i]['category']);
             }
         }
 
@@ -77,6 +80,7 @@ function mismatch_response_service_get_my_mismatch($dbc, $user_id)
             $mismatch_score = $score;
             $mismatch_user_id  = $other_user_id;
             $mismatch_topics =  $topics;
+            $mismatch_categories =  $categories;
         }
     }
 
@@ -86,11 +90,73 @@ function mismatch_response_service_get_my_mismatch($dbc, $user_id)
 
     $mismatch_user = mismatch_user_repository_get_by_id($dbc, $mismatch_user_id);
 
+    $mismatch_category_totals = mismatch_response_service_obter_total_categorias($mismatch_categories);
+
+
     $result = [
         'mismatch_user' => $mismatch_user,
         'mismatch_topics_rows' => $mismatch_topics,
-        'mismatch_topics_count' => count($mismatch_topics)
+        'mismatch_topics_count' => count($mismatch_topics),
+        'mismatch_category_totals' => $mismatch_category_totals
     ];
 
     return $result;
+}
+
+/*
+ * Esta função obtem as categorias e a a sua quantidade de vezes que as repostas foram opostas entre dois usuários
+ * @param array de categorias
+ * @return um array bi dimensional de categoria e a sua respectiva quantidade
+ */
+function mismatch_response_service_obter_total_categorias($categorias)
+{
+    $categorias_total = array();
+
+    foreach ($categorias as $categoria_item) {
+
+        $indice = obter_indice_matriz($categorias_total, $categoria_item);
+
+        if ($indice != null) {
+
+            $i = $indice['i'];
+            $j = $indice['j'] + 1; // adiciona mais um porque é onde esta a quantidade
+            $categorias_total[$i][$j]++;
+
+        } else {
+            array_push($categorias_total, array($categoria_item, 1));
+        }
+    }
+
+    return $categorias_total;
+}
+
+/*
+* A função busca a posição i, j de um dado termo em uma matriz
+* @params a matriz a ser pesquisada
+* @params o termo a ser encontrado
+* @returns um array associativo com a posição i j da matriz ou nulo caso o termo não for encontrado.
+*/
+function obter_indice_matriz($matriz, $termo)
+{
+    if ($matriz == null || sizeof($matriz) == 0) {
+        return null;
+    }
+
+    for ($i = 0; $i < sizeof($matriz); $i++) {
+
+        for ($j = 0; $j < sizeof($matriz[$i]); $j++) {
+
+            if ($matriz[$i][$j] == $termo) {
+
+                $result = [
+                    'i' => $i,
+                    'j' => $j
+                ];
+
+                return $result;
+            }
+        }
+    }
+
+    return null;
 }

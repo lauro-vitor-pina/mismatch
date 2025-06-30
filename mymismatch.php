@@ -3,6 +3,7 @@ require_once(__DIR__ . '/src/templates/startsession.php');
 require_once(__DIR__ . '/src/services/login_service.php');
 require_once(__DIR__ . '/src/services/connection_service.php');
 require_once(__DIR__ . '/src/services/mismatch_response_service.php');
+require_once(__DIR__ .  '/src/services/mismatch_response_service_desenhar_grafico_barras.php');
 
 login_service_authenticate();
 
@@ -48,10 +49,11 @@ if ($result == null) {
 
 <?php
 
-    foreach ($result['mismatch_topics_rows'] as $topic_row) {
-        echo $topic_row . ' <br> ';
-    }
+    $nome_arquivo = MM_UPLOADPATH . $_SESSION['user_id'] . '-mymismatchgraph.png';
 
+    mismatch_response_service_desenhar_grafico_barras(500, 400, $result['mismatch_category_totals'], 5, $nome_arquivo);
+
+    echo "<img src='$nome_arquivo' />";
     echo '<br>';
 
     echo 'View ';
