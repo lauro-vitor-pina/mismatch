@@ -54,6 +54,7 @@ if ($result == null) {
     mismatch_response_service_desenhar_grafico_barras(500, 400, $result['mismatch_category_totals'], 5, $nome_arquivo);
 
     echo "<img src='$nome_arquivo' />";
+    
     echo '<br>';
 
     echo 'View ';
